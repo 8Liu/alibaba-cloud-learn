@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: nacos-config-client-load
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        #文件后缀
+        file-extension: yml
+        #配置的组
+        group: dev
+        #共享配置
+        shared-dataids: common.yml
+        ext-config[0]:
+          data‐id: ext-config.yml
+
+server:
+  port: 18081

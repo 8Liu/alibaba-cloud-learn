@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: nacos-config-client-load
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        group: dev
+
+  profiles:
+    active: dev
+server:
+  port: 18081
