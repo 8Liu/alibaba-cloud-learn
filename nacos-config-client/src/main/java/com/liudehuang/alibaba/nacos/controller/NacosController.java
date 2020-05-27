@@ -30,6 +30,15 @@ public class NacosController {
      *   则可以通过配置spring.cloud.nacos.config.shared-dataids或spring.cloud.nacos.config.refreshable-dataids来添加共享配置，
      *   前者不支持自动刷新，后者支持
      *
+     *   nacos的多环境配置：
+     *   1.利用DataId配置
+     *   其实是通过spring.profile.active属性进行多环境下配置文件的读取
+     *  {spring.cloud.nacos.config.prefix}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}
+     *  2.利用group方案
+     *  需要配置DataID,Group
+     *  3.利用namespace配置
+     *  利用命名空间将环境区分
+     *  需要配置：prefix、file-extension、namespace
      */
     @Value("${test:空str}")
     private String str;

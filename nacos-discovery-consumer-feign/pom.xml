@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.liudehuang</groupId>
-    <artifactId>nacos-discovery-provider</artifactId>
+    <artifactId>nacos-discovery-consumer-feign</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>nacos-discovery-provider</name>
-    <description>nacos服务提供者</description>
+    <name>nacos-discovery-consumer-feign</name>
+    <description>nacos 服务消费方 使用feign 客户端调用</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -23,10 +23,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        <!--nacos配置-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <artifactId>spring-cloud-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
         <dependency>
@@ -40,6 +44,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <!--依赖版本定义-->
     <dependencyManagement>
         <dependencies>
