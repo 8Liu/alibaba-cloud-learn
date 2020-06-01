@@ -1,0 +1,18 @@
+server:
+  port: 8093
+spring:
+  application:
+    name: sentinel-nacos-datasource
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+      ds2:
+        nacos:
+          server-addr: localhost:8848
+          dataId: sentinel-nacos-datasource-flow-rules
+          groupId: SENTINEL_GROUP
+          data-type: json
+          rule-type: flow
+
