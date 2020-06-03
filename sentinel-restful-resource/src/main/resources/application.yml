@@ -1,0 +1,22 @@
+server:
+  port: 8096
+spring:
+  application:
+    name: sentinel-restful-resource
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8080
+        port: 8719
+      filter:
+        ##取消alibaba自动实现的sentinelFilter(取消sentinel默认把全部路径名设置为sentinel里的资源名)
+        enabled: false
+      pathvariable:
+        skip:
+          list: orderId
+feign:
+  sentinel:
+    enabled: true
