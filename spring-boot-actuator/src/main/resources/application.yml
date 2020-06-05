@@ -1,0 +1,11 @@
+server:
+  port: 8061
+
+management:
+  endpoints:
+    web:
+      base-path: /monitor
+      exposure:
+        # springboot 2.0版本后，actuator默认只开放health和info两个端点
+        include: "*"
+    enabled-by-default: true

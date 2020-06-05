@@ -1,0 +1,16 @@
+server:
+  port: 8062
+
+spring:
+  mail:
+    host: smtp.qq.com
+    username: 2969878315@qq.com
+    #这个password是授权码
+    password: beitshsltceydejh
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true

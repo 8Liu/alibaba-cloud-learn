@@ -1,0 +1,14 @@
+server:
+  port: 8068
+  servlet:
+    session:
+      #session的超时时间,也就是用户登录的有效时间
+      timeout: 3600
+spring:
+  session:
+    store-type: redis
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+    database: 3

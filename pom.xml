@@ -38,6 +38,12 @@
         <module>sentinel-restful-resource</module>
         <module>sentinel-cluster-alone</module>
         <module>sentinel-cluster-embedded</module>
+        <module>spring-boot-property</module>
+        <module>spring-boot-actuator</module>
+        <module>spring-boot-mail</module>
+        <module>spring-boot-admin</module>
+        <module>spring-boot-security</module>
+        <module>spring-boot-security</module>
     </modules>
 
 
@@ -58,6 +64,7 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
+
     </dependencyManagement>
 
     <build>
