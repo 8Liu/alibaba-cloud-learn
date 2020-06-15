@@ -1,12 +1,13 @@
-package com.liudehuang.boot.security.session.config;
+package com.liudehuang.boot.security.permission.config;
 
-import com.liudehuang.boot.security.session.handler.MyAuthenticationFailureHandler;
-import com.liudehuang.boot.security.session.handler.MyAuthenticationSucessHandler;
-import com.liudehuang.boot.security.session.handler.MyLogOutSuccessHandler;
-import com.liudehuang.boot.security.session.sessionConfig.MySessionExpiredStrategy;
+import com.liudehuang.boot.security.permission.handler.MyAuthenticationAccessDeniedHandler;
+import com.liudehuang.boot.security.permission.handler.MyAuthenticationFailureHandler;
+import com.liudehuang.boot.security.permission.handler.MyAuthenticationSucessHandler;
+import com.liudehuang.boot.security.permission.handler.MyLogOutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
@@ -14,22 +15,10 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-/**
- * @Description:
- * @Author: liudehuang
- * @CreateDate: 2020-06-05
- * @UpdateUser: liudehuang
- * @UpdateDate: 2020-06-05
- * @UpdateRemark:
- * @Version: 1.0
- */
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public SessionRegistry sessionRegistry(){
@@ -44,10 +33,14 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private MySessionExpiredStrategy sessionExpiredStrategy;
     @Autowired
     private MyLogOutSuccessHandler logOutSuccessHandler;
+    @Autowired
+    private MyAuthenticationAccessDeniedHandler authenticationAccessDeniedHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin() // 表单登录
+        http.exceptionHandling().accessDeniedHandler(authenticationAccessDeniedHandler)
+                .and()
+                .formLogin() // 表单登录
                 // http.httpBasic() // HTTP Basic
                 .loginPage("/login.html")//设置登录界面
                 .loginProcessingUrl("/login")//登录界面发起的请求

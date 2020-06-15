@@ -1,5 +1,5 @@
 server:
-  port: 8068
+  port: 8067
   servlet:
     session:
       #session的超时时间,也就是用户登录的有效时间

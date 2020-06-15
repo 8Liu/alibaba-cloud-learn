@@ -15,6 +15,9 @@
         <module>spring-boot-security-start</module>
         <module>spring-boot-security-authentication</module>
         <module>spring-boot-security-session-manager</module>
+        <module>spring-boot-security-permission</module>
+        <module>spring-boot-security-jwttoken</module>
+        <module>spring-boot-security-oauth2</module>
     </modules>
 
     <dependencies>
