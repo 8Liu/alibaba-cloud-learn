@@ -157,4 +157,26 @@
       IS_LEAF = #{isLeaf,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByRoleId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from base_menu
+    where ID in (select MENU_ID from base_role_menu where ROLE_ID = #{roleId})
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+    m.ID,
+    m.MENU_URL,
+    m.MENU_SEQ,
+    m.MENU_PARENT_ID,
+    m.MENU_NAME,
+    m.MENU_ICON,
+    m.MENU_ORDER,
+    m.IS_LEAF
+    from base_menu as m
+    join base_role_menu as rm on m.ID = rm.MENU_ID
+    join base_user_role as ur on rm.ROLE_ID = ur.ROLE_ID
+    where ur.USER_ID = #{userId}
+  </select>
 </mapper>

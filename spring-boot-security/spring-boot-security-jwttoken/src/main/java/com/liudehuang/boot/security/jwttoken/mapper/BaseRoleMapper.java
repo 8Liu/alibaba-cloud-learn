@@ -3,6 +3,8 @@ package com.liudehuang.boot.security.jwttoken.mapper;
 import com.liudehuang.boot.security.jwttoken.model.domain.BaseRole;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface BaseRoleMapper {
 
@@ -23,5 +25,5 @@ public interface BaseRoleMapper {
      * @param userId
      * @return
      */
-    BaseRole selectByUserId(String userId);
+    List<BaseRole> selectByUserId(String userId);
 }

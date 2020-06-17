@@ -3,6 +3,6 @@ security:
     client:
       client-id: test
       client-secret: test1234
-      registered-redirect-uri: http://localhost:8072/oauth2/getToken
+      registered-redirect-uri: http://localhost:8072/getToken
 server:
   port: 8072

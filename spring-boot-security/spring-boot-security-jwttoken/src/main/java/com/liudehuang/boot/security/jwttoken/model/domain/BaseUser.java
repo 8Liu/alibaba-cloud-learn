@@ -44,15 +44,18 @@ public class BaseUser implements UserDetails {
     private Integer status;
 
 
-    private BaseRole role;
+    private List<BaseRole> roleList;
 
-    public BaseUser(String id, String userName, String userPassword, String nikeName, Integer status, BaseRole role) {
+    private List<BaseMenu> menuList;
+
+    public BaseUser(String id, String userName, String userPassword, String nikeName, Integer status, List<BaseRole> roleList, List<BaseMenu> menuList) {
         this.id = id;
         this.userName = userName;
         this.userPassword = userPassword;
         this.nikeName = nikeName;
         this.status = status;
-        this.role = role;
+        this.roleList = roleList;
+        this.menuList = menuList;
     }
 
     public BaseUser() {
@@ -61,7 +64,12 @@ public class BaseUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        for(BaseRole role:roleList){
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }
+        for(BaseMenu menu:menuList){
+            authorities.add(new SimpleGrantedAuthority(menu.getMenuUrl()));
+        }
         return authorities;
     }
 

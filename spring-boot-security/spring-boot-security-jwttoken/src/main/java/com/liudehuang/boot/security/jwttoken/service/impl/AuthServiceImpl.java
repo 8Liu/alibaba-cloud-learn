@@ -1,5 +1,9 @@
 package com.liudehuang.boot.security.jwttoken.service.impl;
 import com.liudehuang.boot.security.jwttoken.exceptions.BusinessException;
+import com.liudehuang.boot.security.jwttoken.mapper.BaseMenuMapper;
+import com.liudehuang.boot.security.jwttoken.mapper.BaseRoleMapper;
+import com.liudehuang.boot.security.jwttoken.model.domain.BaseMenu;
+import com.liudehuang.boot.security.jwttoken.model.domain.BaseRole;
 import com.liudehuang.boot.security.jwttoken.model.domain.BaseUser;
 import com.liudehuang.boot.security.jwttoken.model.request.UserLoginRequest;
 import com.liudehuang.boot.security.jwttoken.model.request.UserRegisterRequest;
@@ -15,12 +19,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
+    @Autowired
+    private BaseRoleMapper roleMapper;
+    @Autowired
+    private BaseMenuMapper menuMapper;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -36,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
         //存储认证信息
         SecurityContextHolder.getContext().setAuthentication(authentication);
         BaseUser user = (BaseUser)authentication.getPrincipal();
+
         String token = jwtUtil.generateAccessToken(user);
         jwtUtil.putToken(param.getUserName(),token);
         return new ResponseToken(token, user);

@@ -44,6 +44,7 @@
         <module>spring-boot-admin</module>
         <module>spring-boot-security</module>
         <module>spring-boot-security</module>
+        <module>spring-boot-druid-datasource</module>
     </modules>
 
 
