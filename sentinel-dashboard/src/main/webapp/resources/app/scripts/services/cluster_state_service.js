@@ -1,5 +1,5 @@
 /**
- * Cluster state control service.
+ * Cluster state control util.
  *
  * @author Eric Zhao
  */

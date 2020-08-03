@@ -45,6 +45,8 @@
         <module>spring-boot-security</module>
         <module>spring-boot-security</module>
         <module>spring-boot-druid-datasource</module>
+        <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-redis</module>
     </modules>
 
 

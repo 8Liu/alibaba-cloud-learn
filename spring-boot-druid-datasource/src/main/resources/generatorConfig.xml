@@ -16,8 +16,8 @@
 
         <!-- !!!! Database Configurations !!!! -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/auth"
-                        userId="root" password="123456"/>
+                        connectionURL="jdbc:mysql://128.0.255.6:3306/promotion_offer"
+                        userId="root" password="sisso2o@2019!"/>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -43,12 +43,11 @@
         </javaClientGenerator>
 
         <!-- !!!! Table Configurations !!!! -->
-        <table tableName="sys_user" enableCountByExample="false" enableDeleteByExample="false"
+        <table tableName="kanjia_order" enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="sys_role" enableCountByExample="false" enableDeleteByExample="false"
+        <table tableName="kanjia_record" enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="sys_user_role" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
+
 
     </context>
 </generatorConfiguration>

@@ -1,5 +1,5 @@
 /**
- * Parameter flow control service.
+ * Parameter flow control util.
  * 
  * @author Eric Zhao
  */

@@ -1,5 +1,5 @@
 /**
- * Authority rule service.
+ * Authority rule util.
  */
 angular.module('sentinelDashboardApp').service('AuthorityRuleService', ['$http', function ($http) {
     this.queryMachineRules = function(app, ip, port) {
