@@ -1,0 +1,139 @@
+一、redis的数据结构
+1.String
+常用命令：
+    1)set key value 设置指定key的值
+    2)get key 获取key的值
+    3)getrange key start end 返回字符串中的子字符串
+    4)getset key value 将给定 key 的值设为 value ，并返回 key 的旧值(old value)
+    5)getbit key offset 对 key 所储存的字符串值，获取指定偏移量上的位(bit)
+    6)mget key1[key2...] 获取所有给定key的值
+    7)setex key seconds value 设置key的值为value，并将 key 的过期时间设为 seconds (以秒为单位)
+    8)setnx key value 只有在key值不存在时设置key的值
+    9)setrange key offset value 用 value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始
+    10)strlen key  返回 key 所储存的字符串值的长度
+    11)mset key value [key value] 同时设置一个或多个key-value键值对
+    12)msetnx key value [key value] 同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在
+    13)psetex key milliseconds value 这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位。
+    14)incr key 将key中存储的数字加1
+    15)incrby key increment 将key中的所存储的值加上给定的量（increment）
+    16)incrbyfloat key increment 将 key 所储存的值加上给定的浮点增量值（increment）
+    17)decr key 将key中存储的数字值减一
+    18)decrby key 所储存的值减去给定的减量值（decrement）
+    19)append key value 如果 key 已经存在并且是一个字符串， APPEND 命令将指定的 value 追加到该 key 原来值（value）的末尾
+2.Hash redis中的每个hash可以存储2^32 -1 (40多亿)
+常用命令：
+    1)hdel key field1 [field2] 删除一个或多个哈希表字段
+    2)hexists key field 查看哈希表 key 中，指定的字段是否存在
+    3)hget key value 获取存储在哈希表中指定字段的值
+    4)hgetall key 获取在哈希表中指定 key 的所有字段和值
+    5)hincrby key field increment 为哈希表 key 中的指定字段的整数值加上增量 increment
+    6)hincrbyfloat key field increment 为哈希表 key 中的指定字段的浮点数值加上增量 increment
+    7)hkeys key 获取hash表中的所有命名空间
+    8)hlen key 获取hash表中的数量
+    9)hmget key field1[field2] 获取所有给定字段的值
+    10)hmset key field1 value1 [field2 value2] 同时将多个 field-value (域-值)对设置到哈希表 key 中
+    11)hset key field value 将哈希表 key 中的字段 field 的值设为 value
+    12)hsetnx key field value 只有在字段 field 不存在时，设置哈希表字段的值
+    13)hvals key 获取hash表中的所有值
+    14)hscan key cursor [MATCH pattern] [COUNT count] 迭代hash表中的所有键值对
+
+3.List 一个list最多可以包含2^32-1个元素
+常用命令：
+    1)blpop key1 [key2] timeout 移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止
+    2)brpop key1 [key2] timeout 移出并获取列表的最后一个元素, 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止
+    3)brpoplpush source destination timeout 从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
+    4)lindex key index 通过索引获取列表中的元素
+    5)linsert key BEFORE|AFTER pivot value 在列表的元素前后插入元素
+    6)llen key 获取列表长度
+    7)lpop key 移出并获取第一个元素
+    8)lpush key value1 [value2] 将一个或多个值插入到列表头部
+    9)lpushx key value 将一个值插入到已存在的列表头部
+    10)lrange key start stop 获取列表指定范围内的元素
+    11)lrem key count value 移除列表元素
+    12)lset key index value 通过索引设置列表元素的值
+    13)ltrim key start stop 对一个列表进行修剪(trim)，就是说，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除
+    14)rpop key 移除列表最后一个元素，返回值为移除的元素
+    15)rpoplpush source destination 移除列表的最后一个元素，并将该元素添加到另一个列表并返回
+    16)rpush key value1 [value2] 在列表中添加一个或多个值
+    17)RPUSHX key value 为已存在的列表添加值
+
+4.set
+Set是String 类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据。
+Redis中集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。
+集合中最大的成员数为 232 - 1 (4294967295, 每个集合可存储40多亿个成员)。
+常用命令：
+    1)sadd key member1[member2] 向集合中添加一个或多个元素
+    2)scard key 获取集合的成员数
+    3)sdiff key1 [key2] 返回第一个集合和其他集合的差异
+    4)sdiffstore destination key1 [key2] 返回给定所有集合的差集并存储在 destination 中
+    5)sinter key1 [key2] 返回给定所有集合的交集
+    6)sinterstore destination key1 [key2] 返回给定所有集合的交集并存储在 destination 中
+    7)sismember key member 判断member元素是否是集合key中的成员
+    8)smembers key 返回集合中的所有成员
+    9)smove source destination member 将 member 元素从 source 集合移动到 destination 集合
+    10)spop key 移除并返回集合中的一个随机元素
+    11)srandmember key [count] 返回集合中的一个或多个随机数
+    12)srem key member1 [member2] 移除集合中的一个或多个成员
+    13)sunion key1 [key2] 返回所有给定集合的并集
+    14)sunionstore destination key1 [key2] 所有给定集合的并集存储在destination的集合上
+    15)	SSCAN key cursor [MATCH pattern] [COUNT count] 迭代集合中的所有元素
+
+5.sorted set
+Redis 有序集合和集合一样也是string类型元素的集合,且不允许重复的成员。
+不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。
+有序集合的成员是唯一的,但分数(score)却可以重复。
+集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。 集合中最大的成员数为 232 - 1 (4294967295, 每个集合可存储40多亿个成员)。
+常用命令:
+    1)zadd key score1 member [score2 member2] 向有序集合添加一个或多个成员，或者更新已存在成员的分数
+    2)zcard key 获取有序集合的成员数
+    3)zcount key min max 计算在有序集合中指定区间分数的成员数
+    4)zincrby key increment member 有序集合中对指定成员的分数加上增量 increment
+    5)zinterstore destination numkeys key [key ...] 计算给定的一个或多个有序集合的交集并将结果集存储在新的有序集合key中
+    6)zlexcount key min max 在有序集合中计算指定字典区间内成员数量
+    7)zrange key start stop [WITHSCORES] 通过索引区间返回指定区间内的成员
+    8)zrangebylex key min max [LIMIT offset count] 通过字典区间返回有序集合的成员
+    9)ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT] 通过分数返回有序集合指定区间内的成员
+    10)ZRANK key member 返回有序集合中指定成员的索引
+    11)zrem key member [member ...] 移除有序集合中的一个或多个成员
+    12)ZREMRANGEBYLEX key min max 移除有序集合中给定的字典区间的所有成员
+    13)zremrangebyrank key start stop 移除有序集合给定的字典区间的所有成员
+    14)	ZREMRANGEBYSCORE key min max 移除有序集合中给定的分数区间的所有成员
+    15)ZREVRANGE key start stop [WITHSCORES]返回有序集中指定区间内的成员，通过索引，分数从高到低
+    16)	ZREVRANGEBYSCORE key max min [WITHSCORES]返回有序集中指定分数区间内的成员，分数从高到低排序
+    17)ZREVRANK key member 返回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序
+    18)ZSCORE key member 返回有序集中，成员的分数值
+    19)ZUNIONSTORE destination numkeys key [key ...] 计算给定的一个或多个有序集的并集，并存储在新的 key 中
+
+二、redis的发布订阅
+常用命令：
+    1)subscribe channel [channel] 订阅给定的一个频道或多个频道的信息
+    2)psubscribe pattern [pattern] 订阅一个或多个符合给定模式的频道
+    3)pubsub subcommand [argument [argument ...]] 查看订阅与发布系统状态
+    4)publish channel message 将消息发送到指定的频道
+    5)punsubscribe [pattern [pattern ...]] 退订所有给定模式的频道
+    6)unsubscribe [channel [channel ...]] 指退订给定的频道
+subscribe msg redisChat 订阅msg和redisChat频道
+psubscribe china* 订阅china开头的通道
+
+publish msg "hello world" 向msg频道发送hello world信息
+
+三、redis的事务
+Redis事务可以一次执行多个命令，并且带有三个保证：
+    批量操作在发送EXEC命令前被放入队列缓存的。
+    收到EXEC命令后进入事务执行，事务中任意命令执行失败,其余命令依然被执行
+    在事务执行过程中，其他客户端提交的命令请求不会插入到事务执行命令执行序列中
+一个事务从开始到执行会经历三个阶段：
+    1.开始事务
+    2.命令入队
+    3.执行任务
+注意：单个redis的命令的执行是原子性的，但Redis没有在事务上增加任何维持原子性的机制，所以Redis事务的执行并不是原子性的。
+事务可以理解为一个打包的批量执行脚本，但批量指令并非原子化的操作，中间某条指令的失败不会导致前面已做指令的回滚，
+也不会造成后续的指令不做。
+
+常用命令：
+    1.multi: 开始事务(标记一个事务块的开始)
+    2.exec: 执行所有事务块内的命令
+    3.watch key [key] 监视一个或多个key，如果在事务执行之前这个key被其他命令所改动，那么事务将被打断
+    4.discard: 取消事务，放弃执行事务块内的命令
+    5.unwatch: 取消watch命令对所有key的监视
+

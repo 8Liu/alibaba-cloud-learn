@@ -47,6 +47,7 @@
         <module>spring-boot-druid-datasource</module>
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-redis</module>
+        <module>basic-java</module>
     </modules>
 
 
