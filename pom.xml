@@ -48,6 +48,7 @@
         <module>spring-boot-rabbitmq</module>
         <module>spring-boot-redis</module>
         <module>basic-java</module>
+        <module>basic-spring</module>
     </modules>
 
 

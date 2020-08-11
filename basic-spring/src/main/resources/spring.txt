@@ -1,0 +1,88 @@
+一、spring的生命周期
+1.Spring启动，查找并加载需要被Spring管理的bean，进行Bean的实例化
+2.Bean实例化后对将Bean的引入和值注入到Bean的属性中
+3.如果Bean实现了BeanNameAware接口的话，Spring将Bean的Id传递给setBeanName()方法
+4.如果Bean实现了BeanFactoryAware接口的话，Spring将调用setBeanFactory()方法，将BeanFactory容器实例传入
+5.如果Bean实现了ApplicationContextAware接口的话，Spring将调用Bean的setApplicationContext()方法，将bean所在应用上下文引用传入进来。
+6.如果Bean实现了BeanPostProcessor接口，Spring就将调用他们的postProcessBeforeInitialization()方法。
+7.如果Bean 实现了InitializingBean接口，Spring将调用他们的afterPropertiesSet()方法。
+    类似的，如果bean使用init-method声明了初始化方法，该方法也会被调用
+8.如果Bean 实现了BeanPostProcessor接口，Spring就将调用他们的postProcessAfterInitialization()方法。
+9.此时，Bean已经准备就绪，可以被应用程序使用了。他们将一直驻留在应用上下文中，直到应用上下文被销毁。
+10.如果bean实现了DisposableBean接口，Spring将调用它的destory()接口方法，同样，如果bean使用了destory-method 声明销毁方法，该方法也会被调用。
+
+二、spring的ioc
+1.容器的启动阶段
+    spring容器启动时，会通过某种途径加载Configuration MetaData。除了代码方式比较直接外，在大部分情况下，容器需要依赖某些工具类，比如：BeanDefinitionReader,
+BeanDefinitionReader会对加载的Configuration MetaData进行解析和分析，并将分析后的信息组装为相应的BeanDefinition，最后把这些保存了bean定义的BeanDefinition，
+注册到相应的BeanDefinitionRegistry，这样容器的启动工作就完成了。
+2.bean的实例化阶段
+    经过第一阶段，所有bean定义都通过BeanDefinition的方式注册到BeanDefinitionRegistry中当某个请求通过容器的getBean方法请求某个对象，
+或者因为依赖关系容器需要隐式的调用getBean时，就会触发第二阶段的活动：容器会首先检查所请求的对象之前是否已经实例化完成。
+
+bean的生命周期
+1.spring读取配置文件信息，实例化bean
+2.设置对象属性（为对象赋值）
+3.检查是否实现了Aware接口并设置相关依赖
+4.执行BeanPostProcessor的前置处理
+5.检查是否实现了InitializingBean
+6.检查是否配置有自定义的init-method
+7.执行BeanPostProcessor的后置处理
+8.注册必要的Destruction相关的回调接口
+9.使用中
+10.检查是否实现了DisposableBean
+11.检查是否配置有自定义的销毁方法
+
+三、spring容器中的扩展机制
+在容器的启动阶段，BeanFactoryPostProcessor允许我们在容器实例化相应对象之前，
+对注册到容器的BeanDefinition所保存的信息做一些额外的操作，比如修改bean定义的某些属性或者增加其他信息等。
+1.BeanFactoryPostProcessor
+    如果要自定义扩展类，通常需要实现org.springframework.beans.factory.config.BeanFactoryPostProcessor接口，与此同时，因为容器中可能有多个BeanFactoryPostProcessor，
+可能还需要实现org.springframework.core.Ordered接口，以保证BeanFactoryPostProcessor按照顺序执行。
+例如：Spring提供了为数不多的BeanFactoryPostProcessor实现.我们以PropertyPlaceholderConfigurer来说明其大致的工作流程
+    在Spring项目的XML配置文件中，经常可以看到许多配置项的值使用占位符，而将占位符所代表的值单独配置到独立的properties文件，
+这样可以将散落在不同XML文件中的配置集中管理，而且也方便运维根据不同的环境进行配置不同的值。
+这个非常实用的功能就是由PropertyPlaceholderConfigurer负责实现的。
+根据前文，当BeanFactory在第一阶段加载完所有配置信息时，BeanFactory中保存的对象的属性还是以占位符方式存在的，比如${jdbc.mysql.url}。
+
+当PropertyPlaceholderConfigurer作为BeanFactoryPostProcessor被应用时，
+它会使用properties配置文件中的值来替换相应的BeanDefinition中占位符所表示的属性值。
+当需要实例化bean时，bean定义中的属性值就已经被替换成我们配置的值。
+当然其实现比上面描述的要复杂一些，这里仅说明其大致工作原理，更详细的实现可以参考其源码
+
+2.BeanPostProcessor
+postProcessBeforeInitialization()方法与postProcessAfterInitialization()分别对应图中前置处理和后置处理两个步骤将执行的方法。
+这两个方法中都传入了bean对象实例的引用，为扩展容器的对象实例化过程提供了很大便利，在这儿几乎可以对传入的实例执行任何操作。
+
+    注解、aop等功能的实现均大量使用了BeanPostP rocessor，比如有一个自定义注解，你完全可以实现BeanPostProcessor的接口，
+在其中判断bean对象的脑袋上是否有该注解，如果有，你可以对这个bean实例执行任何操作
+
+3.还有一些Aware接口
+比如最常见的ApplicationContextAware接口，实现了这个接口的类都可以获取到一个ApplicationContext对象。
+当容器中每个对象的实例化过程走到BeanPostProcessor前置处理这一步时，容器会检测到之前注册到容器的ApplicationContextAwareProcessor，
+然后就会调用其postProcessBeforeInitialization()方法，检查并设置Aware相关依赖。
+
+四、springboot常用注解
+1.@ComponentScan
+@ComponentScan注解对应XML配置形式中的元素表示启用组件扫描，Spring会自动扫描所有通过注解配置的bean，
+然后将其注册到IOC容器中，默认扫描的包是启动类的同级以及子级的包
+2.@Import,ImportSelector,ImportBeanDefinitionRegistrar
+    1)@Import注解用于导入配置类（需要配置的类）
+    2)ImportSelector中，导入实现了ImportSelector接口的类（返回需要导入的组件的全类名数组）
+    3)ImportBeanDefinitionRegistrar,导入实现了ImportBeanDefinitionRegistrar的类（手动注册bean到容器）
+3.@Conditional
+@Conditional 注解表示在满足某种条件后才初始化一个bean或者启用某些配置
+    可以自定义注解，实现Condition接口
+4.@ConfigurationProperties与@EnableConfigurationProperties
+    注入配置文件参数，@EnableConfigurationProperties注解表示对@ConfigurationProperties的内嵌支持默认会将对应Properties Class作为bean注入的IOC容器中，
+    即在相应的Properties类上不用加@Component注解
+
+五、SpringFactoriesLoader详解
+1.springboot启动时，会从CLASSPATH下的每个Jar包中搜寻所有META-INF/spring.factories配置文件，
+然后将解析properties文件，找到指定名称的配置后返回。
+2.执行loadFactoryNames(EnableAutoConfiguration.class, classLoader)后，得到对应的一组@Configuration类，
+我们就可以通过反射实例化这些类然后注入到IOC容器中，最后容器里就有了一系列标注了@Configuration的JavaConfig形式的配置类
+
+六、Spring容器的事件监听机制
+Spring的ApplicationContext容器内部中的所有事件类型均继承自org.springframework.context.AppliationEvent，
+容器中的所有监听器都实现org.springframework.context.ApplicationListener接口，并且以bean的形式注册在容器中。

@@ -1,0 +1,37 @@
+一、springboot的自动配置原理
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented @Inherited
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(excludeFilters = {
+       @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
+       @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
+public @interface SpringBootApplication {
+     // ......
+}
+
+1.@SpringBootConfiguration就是@Configuration，它是Spring框架的注解，标明该类是一个JavaConfig配置类。
+2.@EnableAutoConfiguration开启了springboot的自动配置功能，Spring Boot会根据应用的依赖、自定义的bean、classpath下有没有某个类
+等等因素来猜测你需要的bean，后注册到IOC容器中。
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@AutoConfigurationPackage
+@Import(EnableAutoConfigurationImportSelector.class)
+public @interface EnableAutoConfiguration {
+     // ......
+}
+
+@EnableAutoConfiguration注入了一个EnableAutoConfigurationImportSelector 的bean
+##EnableAutoConfigurationImportSelector的代码
+public String[] selectImports(AnnotationMetadata annotationMetadata) {
+     // 省略了大部分代码，保留一句核心代码
+     // 注意：SpringBoot最近版本中，这句代码被封装在一个单独的方法中
+     // SpringFactoriesLoader相关知识请参考前文
+     List<String> factories = new ArrayList<String>(new LinkedHashSet<String>(
+           SpringFactoriesLoader.loadFactoryNames(EnableAutoConfiguration.class, this.beanClassLoader)));
+}
+
+这个类会扫描所有的jar包，将所有符合条件的@Configuration配置类注入的容器中何为符合条件，看看META-INF/spring.factories的文件内容：
