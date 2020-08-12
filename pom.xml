@@ -49,6 +49,7 @@
         <module>spring-boot-redis</module>
         <module>basic-java</module>
         <module>basic-spring</module>
+        <module>basic-springboot</module>
     </modules>
 
 
