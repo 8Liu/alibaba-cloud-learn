@@ -50,6 +50,7 @@
         <module>basic-java</module>
         <module>basic-spring</module>
         <module>basic-springboot</module>
+        <module>basic-spring-cloud-eureka</module>
     </modules>
 
 

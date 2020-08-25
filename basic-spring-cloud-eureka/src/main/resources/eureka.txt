@@ -1,0 +1,11 @@
+一、eureka概念理解
+1.服务注册
+当项目一启动，向eureka-server发送自己的元数据,(运行的ip，port,健康的监控数据)eureka-server在自己内部保存这些元数据。
+2.服务续约
+项目启动成功了，也向eureka-server注册自己成功了，项目还会定时的去eureka-sever汇报自己还活着。（默认的时间是30s）
+3.服务下线
+当项目关闭的时候，项目会给eureka-server报告自己下机了
+4.服务的剔除
+当服务一段时间没有向eureka-server汇报自己的状态，eureka-server认为他死了，会把它剔除掉
+
+二、eureka是怎么实现注册发现的
