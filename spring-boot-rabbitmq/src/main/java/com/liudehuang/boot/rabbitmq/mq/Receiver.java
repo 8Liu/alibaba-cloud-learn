@@ -68,6 +68,7 @@ public class Receiver {
         try {
             String msg = new String(message.getBody(), "UTF-8");
             log.info("监听取消订单列mq消息：param:{},date:{}",msg, new Date());
+            channel.basicAck(deliveryTag, false);
         }catch (Exception e){
             log.error("message:{} e:{}",e.getMessage(),e);
             channel.basicNack(deliveryTag, false, false);

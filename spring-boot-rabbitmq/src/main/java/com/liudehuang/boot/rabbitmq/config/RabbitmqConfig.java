@@ -66,12 +66,12 @@ public class RabbitmqConfig {
     @Bean("cancelOrderQueue")
     public Queue cancelOrderQueue(){
         Map<String, Object> args = new HashMap<>(3);
-        // x-dead-letter-exchange    这里声明当前队列绑定的死信交换机
+      /*  // x-dead-letter-exchange    这里声明当前队列绑定的死信交换机
         args.put("x-dead-letter-exchange", RabbitmqConstant.DEAD_LETTER_EXCHANGE_NAME);
         // x-dead-letter-routing-key  这里声明当前队列的死信路由key
         args.put("x-dead-letter-routing-key", RabbitmqConstant.DEAD_LETTER_ROUTING_KEY);
         // x-message-ttl  声明队列的TTL 消息的过期时间 设置队列的ttl 6s
-        args.put("x-message-ttl", 6000);
+        args.put("x-message-ttl", 6000);*/
         return QueueBuilder.durable(RabbitmqConstant.CANCEL_ORDER_QUEUE_NAME).withArguments(args).build();
     }
 
