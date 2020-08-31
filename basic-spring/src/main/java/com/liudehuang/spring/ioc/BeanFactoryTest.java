@@ -1,7 +1,7 @@
 package com.liudehuang.spring.ioc;
 
 import com.liudehuang.spring.SpringApp;
-import com.liudehuang.spring.config.BookConfiguration;
+import com.liudehuang.spring.config.BeanLifecycleConfig;
 import com.liudehuang.spring.entity.Book;
 import com.liudehuang.spring.entity.Business;
 import org.junit.Test;
@@ -52,7 +52,7 @@ public class BeanFactoryTest {
 
     @Test
     public void testBeanLifecyle(){
-        ApplicationContext context = new AnnotationConfigApplicationContext(BookConfiguration.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(BeanLifecycleConfig.class);
         Book book = context.getBean("book", Book.class);
         System.out.println("Book name = "+book.getBookName());
         ((AnnotationConfigApplicationContext)context).destroy();

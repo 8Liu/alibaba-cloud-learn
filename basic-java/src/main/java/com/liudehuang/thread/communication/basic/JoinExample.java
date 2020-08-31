@@ -9,7 +9,8 @@ package com.liudehuang.thread.communication.basic;
  * @UpdateRemark: join方法 ,例如：假如A线程内调用B线程的b.join(),则A线程处于阻塞状态，等待B线程完全执行完
  * @Version:
  */
-public class JoinExample {
+public class
+JoinExample {
 
     public static void join1() throws InterruptedException {
         Thread threadA = new Thread(()->{

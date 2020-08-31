@@ -1,0 +1,1 @@
+AnnotatedGenericBeanDefinition 表示注解方式启动配置类

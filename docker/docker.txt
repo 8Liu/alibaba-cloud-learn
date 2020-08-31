@@ -1,0 +1,37 @@
+(通过容器安装的软件默认安装在/容器id/etc/<软件名称>)
+一、docker容器的使用
+1.获取镜像文件 docker pull <镜像名称>
+2.启动容器  docker run -it <镜像名称> /bin/bash
+    注：
+        -i 交互操作
+        -t 终端
+        -d 后台运行
+        -P:将容器内部使用的网络端口随机映射到我们使用的主机上
+        -v:挂载容器中的配置文件
+3.退出容器 exit
+4.查看正在进行的容器 docker ps
+5.查看所有的容器 docker ps -a
+6.启动一个已经停止的容器 docker start <容器ID>
+7.停止一个容器 docker stop <容器ID>
+8.进入到一个容器内
+    1)docker attach <容器ID> /bin/bash  此命令进入容器终端，退出容器会导致容器停止
+    2)docker exec <容器ID> /bin/bash 此命令进入容器终端，退出容器不会导致容器停止
+9.导出容器快照
+    docker export <容器ID> > <目标处>
+    docker export 1e560fca3906 > ubuntu.tar  导出容器 1e560fca3906 快照到本地文件 ubuntu.tar
+10.导入容器快照
+    cat docker/ubuntu.tar | docker import - test/ubuntu:v1 将ubuntu.tar快照文件导入镜像test/ubuntu:v1中
+11.删除容器
+     docker rm -f <容器ID> 删除容器
+12.清理掉所有处于终止状态的容器  docker container prune
+
+13.查看docker容器底层信息 docker inspect <容器id>
+
+二、docker的镜像使用
+1.docker images 列出本地主机的镜像
+2.docker pull <容器ID> 从镜像仓库拉取镜像
+3.docker search <镜像名称> 查找镜像
+4.docker rmi <镜像id> 删除镜像
+5.docker build -t <镜像名称> . <Dockerfile文件所在的目录，可以是DockerFile文件的绝对路径>
+
+
