@@ -1,0 +1,15 @@
+1.下载jdk-8u261-linux-x64.tar.gz
+2.mkdir /usr/software
+3.把安装包上传至/usr/software
+4.解压tar -zxvf jdk-8u261-linux-x64.tar.gz
+5.mv /usr/software/jdk1.8.0_211 /usr/java
+6.配置环境变量 vim /etc/profile
+7.在profile后面加入
+export JAVA_HOME=/usr/java
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib:$CLASSPATH
+export JAVA_PATH=${JAVA_HOME}/bin:${JRE_HOME}/bin
+export PATH=$PATH:${JAVA_PATH}
+8.刷新环境变量
+source /etc/profile
+9.验证 java -version

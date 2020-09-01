@@ -1,0 +1,12 @@
+1.下载镜像文件
+docker pull beginor/gitlab-ce:11.0.1-ce.0
+2.创建docker挂载文件
+mkdir -p /data/gitlab/etc
+mkdir -p /data/gitlab/log
+mkdir -p /data/gitlab/data
+3.docker --detach --publish 8443:443 --publish 8090:80 --name gitlab
+	--restart unless-stopped
+	-d
+	-v /data/gitlab/etc:/etc/gitlab
+	-v /data/gitlab/log:/var/log/gitlab
+	-v /data/gitlab/data:/var/opt/gitlab beginor/gitlab-ce:11.0.1-ce.0
