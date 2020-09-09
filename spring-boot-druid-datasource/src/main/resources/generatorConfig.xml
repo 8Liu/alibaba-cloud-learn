@@ -43,9 +43,9 @@
         </javaClientGenerator>
 
         <!-- !!!! Table Configurations !!!! -->
-        <table tableName="kanjia_order" enableCountByExample="false" enableDeleteByExample="false"
+        <table tableName="meet_gift" enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="kanjia_record" enableCountByExample="false" enableDeleteByExample="false"
+        <table tableName="meet_rank" enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"/>
 
 

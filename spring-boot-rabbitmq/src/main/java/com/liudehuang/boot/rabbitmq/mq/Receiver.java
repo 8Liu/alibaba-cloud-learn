@@ -63,7 +63,7 @@ public class Receiver {
      * @param channel
      * @throws IOException
      */
-    @RabbitListener(queues = RabbitmqConstant.CANCEL_ORDER_QUEUE_NAME, containerFactory = "customContainerFactory")
+   /* @RabbitListener(queues = RabbitmqConstant.CANCEL_ORDER_QUEUE_NAME, containerFactory = "customContainerFactory")
     public void receiveCancelOrderMsg(Message message, @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag, Channel channel) throws IOException{
         try {
             String msg = new String(message.getBody(), "UTF-8");
@@ -74,5 +74,5 @@ public class Receiver {
             channel.basicNack(deliveryTag, false, false);
         }
 
-    }
+    }*/
 }
