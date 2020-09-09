@@ -1,0 +1,22 @@
+1.下载镜像文件
+docker pull beginor/gitlab-ce:11.0.1-ce.0
+2.创建docker挂载文件
+mkdir -p /data/gitlab/etc
+mkdir -p /data/gitlab/log
+mkdir -p /data/gitlab/data
+3.docker run -p 443:443 -p 80:80 -p 222:22 --name gitlab --restart unless-stopped -d -v /data/gitlab/etc:/etc/gitlab -v /data/gitlab/log:/var/log/gitlab -v /data/gitlab/data:/var/opt/gitlab beginor/gitlab-ce:11.0.1-ce.0
+运行gitlab容器
+4.vim /data/gitlab/etc/gitlab.rb
+# 配置http协议所使用的访问地址,不加端口号默认为80
+external_url 'http://192.168.199.231'
+
+# 配置ssh协议所使用的访问地址和端口
+gitlab_rails['gitlab_ssh_host'] = '192.168.199.231'
+gitlab_rails['gitlab_shell_ssh_port'] = 222 # 此端口是run时22端口映射的222端口
+
+5.vim /data/gitlab/data/gitlab-rails/etc/gitlab.yml
+    #修改以下配置
+    host: 192.168.110.130
+    port: 80
+    https: false
+6.重启gitlab容器
