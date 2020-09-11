@@ -1,7 +1,7 @@
 package com.liudehuang.alibaba.nacos.consumer.controller;
 
+import com.alibaba.cloud.nacos.ribbon.NacosServer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.alibaba.nacos.ribbon.NacosServer;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.ribbon.RibbonLoadBalancerClient;

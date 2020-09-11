@@ -51,6 +51,7 @@
         <module>basic-spring</module>
         <module>basic-springboot</module>
         <module>basic-spring-cloud-eureka</module>
+        <module>spring-boot-kafka</module>
     </modules>
 
 
